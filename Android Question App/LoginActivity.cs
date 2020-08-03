@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using Android.App;
@@ -7,56 +8,78 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
+using Android.Util;
 using Android.Views;
+using Android.Views.InputMethods;
 using Android.Widget;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using Android_Question_App.Adapters;
+using Android_Question_App.Model;
+using Common.IViews;
+using Common.Presenters;
+
 
 namespace Android_Question_App
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class LoginActivity : AppCompatActivity
+    public class LoginActivity : AppCompatActivity, ISubRedditItemsView, OnItemClickListener
     {
+        private RecyclerView mRecyclerViewSubReddit;
+        private SubRedditAdapter mSubRedditAdapter;
+        private RecyclerView.LayoutManager mLayoutManager;
+        private Android.Support.V7.Widget.Toolbar mToolbar;
+        private SubRedditItemsViewPresenter mSubRedditItemsViewPresenter;
+        private TextInputEditText mTextInputEditTextSearch;
+        private Android.Support.V7.Widget.SearchView mSearchViewRedditKeyword;
+
+
+        [Obsolete]
+        private ProgressDialog mProgressDialog;
+
+        [Obsolete]
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             SetContentView(Resource.Layout.activity_main);
 
-            Android.Support.V7.Widget.Toolbar toolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
-            SetSupportActionBar(toolbar);
+            mToolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
+            SetSupportActionBar(mToolbar);
+            mRecyclerViewSubReddit = FindViewById<RecyclerView>(Resource.Id.rvSubReddit);
+            mTextInputEditTextSearch = FindViewById<TextInputEditText>(Resource.Id.textInput1);
+            //mSearchViewRedditKeyword = FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.sVSubRedditKeyword); 
+
+
+            mSubRedditItemsViewPresenter = new SubRedditItemsViewPresenter(this);
+
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.SetMessage("Contacting server. Please wait...");
+            mProgressDialog.SetCancelable(true);
+
+
+            //init adapter
+            mLayoutManager = new LinearLayoutManager(this);
+            mRecyclerViewSubReddit.SetLayoutManager(mLayoutManager);
 
             Button searchButton = FindViewById<Button>(Resource.Id.search_button);
             searchButton.Click += SearchButton_Click;
+
         }
 
+        [Obsolete]
         private void SearchButton_Click(object sender, EventArgs e)
         {
-            var json = new WebClient().DownloadString("http://www.reddit.com/subreddits/search.json?q=" + FindViewById<TextInputEditText>(Resource.Id.textInput1).Text);
-            var subreddits = JsonConvert.DeserializeObject<JObject>(json);
+            string keyword = mTextInputEditTextSearch.Text;
 
-            foreach (var subreddit in subreddits["data"]["children"] as JArray)
+            if (String.IsNullOrEmpty(keyword))
             {
-                var name = subreddit["data"]["display_name_prefixed"].ToString();
-
-                var subredditList = FindViewById<LinearLayout>(Resource.Id.subreddit__list);
-                var newListItem = new TextView(this);
-                newListItem.Text = name;
-                newListItem.Click += NewListItem_Click;
-
-                subredditList.AddView(newListItem);
+                Toast.MakeText(this, "Please input value", ToastLength.Long).Show();
             }
-        }
-
-        private void NewListItem_Click(object sender, EventArgs e)
-        {
-            var listItem = (TextView)sender;
-            var subredditName = listItem.Text;
-            var sidebarHtml = new WebClient().DownloadString("http://www.reddit.com/" + subredditName + "/about/sidebar");
-
-            var intent = new Intent(this, typeof(SidebarActivity));
-            intent.PutExtra("sidebarHtml", sidebarHtml);
-            this.StartActivity(intent);
+            else
+            {
+                mProgressDialog.Show();
+                mSubRedditItemsViewPresenter.LoadSubRedditItem(keyword);
+            }
         }
 
         public override bool OnCreateOptionsMenu(IMenu menu)
@@ -76,6 +99,29 @@ namespace Android_Question_App
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-	}
-}
 
+        [Obsolete]
+        public void GotoSubReditItemDetailView(List<SubReddit> listSubReddit)
+        {
+            mSubRedditAdapter = new SubRedditAdapter(listSubReddit, this);
+            mRecyclerViewSubReddit.SetAdapter(mSubRedditAdapter);
+            // hide keyboard
+
+            InputMethodManager imm = (InputMethodManager)GetSystemService(Context.InputMethodService);
+            imm.HideSoftInputFromWindow(mTextInputEditTextSearch.WindowToken, 0);
+            mProgressDialog.Dismiss();
+        }
+
+        public void OnItemClick(int position, string redditSubName)
+        {
+            var sidebarHtml = "https://www.reddit.com/" + redditSubName + "/about/sidebar";
+
+            Log.Debug("sidebarHtml", "sidebarHtml " + sidebarHtml);
+
+            var intent = new Intent(this, typeof(SidebarActivity));
+            intent.PutExtra("sidebarHtml", sidebarHtml);
+            this.StartActivity(intent);
+        }
+
+    }
+}
