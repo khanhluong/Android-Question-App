@@ -8,5 +8,6 @@ namespace Common.IViews
     public interface ISubRedditItemsView
     {
         void GotoSubReditItemDetailView(List<Child> listSubRedditChildren);
+        void LoadingSubRedditError(String err);
     }
 }

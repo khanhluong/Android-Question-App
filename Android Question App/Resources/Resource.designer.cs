@@ -5933,6 +5933,12 @@ namespace Android_Question_App
 			// aapt resource value: 0x7F0E0039
 			public const int tv_search_for_sub_reddit = 2131623993;
 			
+			// aapt resource value: 0x7F0E003A
+			public const int url_loading = 2131623994;
+			
+			// aapt resource value: 0x7F0E003B
+			public const int warning_input_value = 2131623995;
+			
 			static String()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

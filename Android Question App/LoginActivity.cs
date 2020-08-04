@@ -33,8 +33,9 @@ namespace Android_Question_App
         private Android.Support.V7.Widget.Toolbar mToolbar;
         private SubRedditItemsViewPresenter mSubRedditItemsViewPresenter;
         private TextInputEditText mTextInputEditTextSearch;
-        private Android.Support.V7.Widget.SearchView mSearchViewRedditKeyword;
         private IRedditApi redditApi;
+
+        public const string REDDIT_URL = "https://reddit.com";
 
 
         [Obsolete]
@@ -53,13 +54,13 @@ namespace Android_Question_App
             mTextInputEditTextSearch = FindViewById<TextInputEditText>(Resource.Id.textInput1);
             //mSearchViewRedditKeyword = FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.sVSubRedditKeyword);
 
-            redditApi = RestService.For<IRedditApi>("https://reddit.com");
+            redditApi = RestService.For<IRedditApi>(REDDIT_URL);
 
 
             mSubRedditItemsViewPresenter = new SubRedditItemsViewPresenter(this);
 
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.SetMessage("Contacting server. Please wait...");
+            mProgressDialog.SetMessage(GetString(Resource.String.url_loading));
             mProgressDialog.SetCancelable(true);
 
 
@@ -101,7 +102,7 @@ namespace Android_Question_App
 
             if (String.IsNullOrEmpty(keyword))
             {
-                Toast.MakeText(this, "Please input value", ToastLength.Long).Show();
+                Toast.MakeText(this, GetString(Resource.String.warning_input_value), ToastLength.Long).Show();
             }
             else
             {
@@ -138,6 +139,12 @@ namespace Android_Question_App
             mProgressDialog.Dismiss();
         }
 
+        public void LoadingSubRedditError(string err)
+        {
+            mProgressDialog.Dismiss();
+            Toast.MakeText(this, err, ToastLength.Short).Show();
+        }
+
         public void HideKeyBoard(IBinder windowToken)
         {
             InputMethodManager imm = (InputMethodManager)GetSystemService(Context.InputMethodService);
@@ -154,6 +161,8 @@ namespace Android_Question_App
             intent.PutExtra("sidebarHtml", sidebarHtml);
             this.StartActivity(intent);
         }
+
+
     }
 
     

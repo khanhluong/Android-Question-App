@@ -43,9 +43,8 @@ namespace Android_Question_App.Adapters
                 imageLoader = ImageLoader.Instance;
                 imageLoader.DisplayImage(imageSubRedditUrl, vh.ImageViewSubReddit);
             }
-            
-            vh.Name.Click += (sender, e) => onClickListener(position, mListSubRedditChildren[position].data.display_name_prefixed);
-            vh.ImageViewSubReddit.Click += (sender, e) => onClickListener(position, mListSubRedditChildren[position].data.display_name_prefixed);
+
+            vh.ItemView.Click+= (sender, e) => onClickListener(position, mListSubRedditChildren[position].data.display_name_prefixed);
         }
 
         private void onClickListener(int position, string redditSubName)
@@ -78,7 +77,7 @@ namespace Android_Question_App.Adapters
             return imageBitmap;
         }
 
-        
+
     }
 
 
@@ -86,20 +85,21 @@ namespace Android_Question_App.Adapters
     {
         public TextView Name { get; private set; }
         public ImageView ImageViewSubReddit { get; private set; }
+        public new View ItemView { get; private set; }
 
         public SubRedditViewHolder(View itemView) : base(itemView)
         {
             Name = itemView.FindViewById<TextView>(Resource.Id.TvSubRedditName);
             ImageViewSubReddit = itemView.FindViewById<ImageView>(Resource.Id.imvSubReddit);
-            //ImageViewSubReddit = itemView.FindViewById<ImageView>(Resource.Id.ImvSubReddit);
+            ItemView = itemView;
 
         }
 
 
 
 
-        
+
     }
 
-    
+
 }

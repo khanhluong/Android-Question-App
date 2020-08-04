@@ -7,7 +7,7 @@ namespace Common.Model
     {
         public object user_flair_background_color { get; set; }
         public string submit_text_html { get; set; }
-        public bool restrict_posting { get; set; }
+        public bool? restrict_posting { get; set; }
         public bool? user_is_banned { get; set; }
         public bool? free_form_reports { get; set; }
         public bool? wiki_enabled { get; set; }
@@ -24,21 +24,21 @@ namespace Common.Model
         public string display_name_prefixed { get; set; }
         public object accounts_active { get; set; }
         public bool? public_traffic { get; set; }
-        public int subscribers { get; set; }
+        public int? subscribers { get; set; }
         public List<object> user_flair_richtext { get; set; }
-        public int videostream_links_count { get; set; }
-        public string name { get; set; }
+        public int? videostream_links_count { get; set; }
+        public string? name { get; set; }
         public bool? quarantine { get; set; }
         public bool? hide_ads { get; set; }
         public bool? emojis_enabled { get; set; }
         public string advertiser_category { get; set; }
         public string public_description { get; set; }
-        public int comment_score_hide_mins { get; set; }
+        public int? comment_score_hide_mins { get; set; }
         public bool? user_has_favorited { get; set; }
         public object user_flair_template_id { get; set; }
         public string community_icon { get; set; }
         public string banner_background_image { get; set; }
-        public bool original_content_tag_enabled { get; set; }
+        public bool? original_content_tag_enabled { get; set; }
         public string submit_text { get; set; }
         public string description_html { get; set; }
         public bool? spoilers_enabled { get; set; }
@@ -51,8 +51,8 @@ namespace Common.Model
         public string key_color { get; set; }
         public bool? can_assign_user_flair { get; set; }
         public string created { get; set; }
-        public int wls { get; set; }
-        public bool show_media_preview { get; set; }
+        public int? wls { get; set; }
+        public bool? show_media_preview { get; set; }
         public string submission_type { get; set; }
         public bool? user_is_subscriber { get; set; }
         public bool? disable_contributor_requests { get; set; }

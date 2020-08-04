@@ -126,6 +126,7 @@
     <Folder Include="Activities\" />
     <Folder Include="Adapters\" />
     <Folder Include="Model\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">

@@ -2,4 +2,6 @@
     <string name="app_name">Android Question App</string>
     <string name="tv_search_for_sub_reddit">Search for a subreddit</string>
     <string name="tv_search">Search</string>
+    <string name="url_loading">Contacting server. Please wait...</string>
+    <string name="warning_input_value">Please input value</string>
 </resources>

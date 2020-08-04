@@ -69,6 +69,7 @@ namespace Common.Presenters
             catch (Exception ex)
             {
                 Log.Debug("SubRedditResponse ex ", ex.Message);
+                subRedditItemsView.LoadingSubRedditError(ex.Message);
             }
 
         }
