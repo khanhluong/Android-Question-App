@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
+using Android.Content;
+using Android.Graphics;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using Android_Question_App.Model;
+using Com.Nostra13.Universalimageloader.Core;
+using Common.Model;
 using Common.Presenters;
 
 namespace Android_Question_App.Adapters
@@ -15,21 +20,32 @@ namespace Android_Question_App.Adapters
         private readonly SubRedditItemDetailViewPresenter viewModel;
         private OnItemClickListener onItemClickListener;
 
-        List<SubReddit> mListSubReddit;
+        List<Child> mListSubRedditChildren;
+        ImageLoader imageLoader;
 
-        public SubRedditAdapter(List<SubReddit> mListSubReddit, OnItemClickListener onItemClickListener)
+        public SubRedditAdapter(Context context, List<Child> mListSubRedditChildren, OnItemClickListener onItemClickListener)
         {
-            this.mListSubReddit = mListSubReddit;
+            this.mListSubRedditChildren = mListSubRedditChildren;
             this.onItemClickListener = onItemClickListener;
+            ImageLoader.Instance.Init(ImageLoaderConfiguration.CreateDefault(context));
         }
 
-        public override int ItemCount => mListSubReddit.Count;
+        public override int ItemCount => mListSubRedditChildren.Count;
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             SubRedditViewHolder vh = holder as SubRedditViewHolder;
-            vh.Name.Text = mListSubReddit[position].Name;
-            vh.Name.Click += (sender, e) => onClickListener(position, mListSubReddit[position].Name);
+            vh.Name.Text = mListSubRedditChildren[position].data.display_name_prefixed;
+
+            String imageSubRedditUrl = mListSubRedditChildren[position].data.icon_img;
+            if (!String.IsNullOrEmpty(imageSubRedditUrl))
+            {
+                imageLoader = ImageLoader.Instance;
+                imageLoader.DisplayImage(imageSubRedditUrl, vh.ImageViewSubReddit);
+            }
+            
+            vh.Name.Click += (sender, e) => onClickListener(position, mListSubRedditChildren[position].data.display_name_prefixed);
+            vh.ImageViewSubReddit.Click += (sender, e) => onClickListener(position, mListSubRedditChildren[position].data.display_name_prefixed);
         }
 
         private void onClickListener(int position, string redditSubName)
@@ -45,6 +61,24 @@ namespace Android_Question_App.Adapters
 
             return subRedditViewHolder;
         }
+
+        public Bitmap GetImageBitmapFromUrl(string url)
+        {
+            Bitmap imageBitmap = null;
+
+            using (var webClient = new WebClient())
+            {
+                var imageBytes = webClient.DownloadData(url);
+                if (imageBytes != null && imageBytes.Length > 0)
+                {
+                    imageBitmap = BitmapFactory.DecodeByteArray(imageBytes, 0, imageBytes.Length);
+                }
+            }
+
+            return imageBitmap;
+        }
+
+        
     }
 
 
@@ -56,10 +90,16 @@ namespace Android_Question_App.Adapters
         public SubRedditViewHolder(View itemView) : base(itemView)
         {
             Name = itemView.FindViewById<TextView>(Resource.Id.TvSubRedditName);
+            ImageViewSubReddit = itemView.FindViewById<ImageView>(Resource.Id.imvSubReddit);
             //ImageViewSubReddit = itemView.FindViewById<ImageView>(Resource.Id.ImvSubReddit);
 
         }
 
+
+
+
         
     }
+
+    
 }

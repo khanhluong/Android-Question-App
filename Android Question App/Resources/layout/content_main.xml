@@ -30,12 +30,6 @@
 		android:layout_margin="@dimen/btn_search_margin"
 		android:text="@string/tv_search"/>
 
-	<LinearLayout
-		android:id="@+id/subreddit__list"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:orientation="vertical"/>
-
 
 	<android.support.v7.widget.RecyclerView
 		android:id="@+id/rvSubReddit"
