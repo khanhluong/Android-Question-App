@@ -5348,68 +5348,68 @@ namespace Android_Question_App
 			// aapt resource value: 0x7F0800A7
 			public const int text2 = 2131230887;
 			
-			// aapt resource value: 0x7F0800A8
-			public const int textInput1 = 2131230888;
+			// aapt resource value: 0x7F0800AC
+			public const int textinput_counter = 2131230892;
 			
 			// aapt resource value: 0x7F0800AD
-			public const int textinput_counter = 2131230893;
+			public const int textinput_error = 2131230893;
 			
 			// aapt resource value: 0x7F0800AE
-			public const int textinput_error = 2131230894;
+			public const int textinput_helper_text = 2131230894;
 			
-			// aapt resource value: 0x7F0800AF
-			public const int textinput_helper_text = 2131230895;
+			// aapt resource value: 0x7F0800A8
+			public const int textSpacerNoButtons = 2131230888;
 			
 			// aapt resource value: 0x7F0800A9
-			public const int textSpacerNoButtons = 2131230889;
+			public const int textSpacerNoTitle = 2131230889;
 			
 			// aapt resource value: 0x7F0800AA
-			public const int textSpacerNoTitle = 2131230890;
+			public const int textStart = 2131230890;
 			
 			// aapt resource value: 0x7F0800AB
-			public const int textStart = 2131230891;
+			public const int text_input_password_toggle = 2131230891;
 			
-			// aapt resource value: 0x7F0800AC
-			public const int text_input_password_toggle = 2131230892;
+			// aapt resource value: 0x7F0800AF
+			public const int time = 2131230895;
 			
 			// aapt resource value: 0x7F0800B0
-			public const int time = 2131230896;
+			public const int title = 2131230896;
 			
 			// aapt resource value: 0x7F0800B1
-			public const int title = 2131230897;
+			public const int titleDividerNoCustom = 2131230897;
 			
 			// aapt resource value: 0x7F0800B2
-			public const int titleDividerNoCustom = 2131230898;
+			public const int title_template = 2131230898;
 			
 			// aapt resource value: 0x7F0800B3
-			public const int title_template = 2131230899;
+			public const int toolbar = 2131230899;
 			
 			// aapt resource value: 0x7F0800B4
-			public const int toolbar = 2131230900;
+			public const int top = 2131230900;
 			
 			// aapt resource value: 0x7F0800B5
-			public const int top = 2131230901;
+			public const int topPanel = 2131230901;
 			
 			// aapt resource value: 0x7F0800B6
-			public const int topPanel = 2131230902;
+			public const int touch_outside = 2131230902;
 			
 			// aapt resource value: 0x7F0800B7
-			public const int touch_outside = 2131230903;
+			public const int transition_current_scene = 2131230903;
 			
 			// aapt resource value: 0x7F0800B8
-			public const int transition_current_scene = 2131230904;
+			public const int transition_layout_save = 2131230904;
 			
 			// aapt resource value: 0x7F0800B9
-			public const int transition_layout_save = 2131230905;
+			public const int transition_position = 2131230905;
 			
 			// aapt resource value: 0x7F0800BA
-			public const int transition_position = 2131230906;
+			public const int transition_scene_layoutid_cache = 2131230906;
 			
 			// aapt resource value: 0x7F0800BB
-			public const int transition_scene_layoutid_cache = 2131230907;
+			public const int transition_transform = 2131230907;
 			
 			// aapt resource value: 0x7F0800BC
-			public const int transition_transform = 2131230908;
+			public const int tvSearchInputValue = 2131230908;
 			
 			// aapt resource value: 0x7F080006
 			public const int TvSubRedditName = 2131230726;

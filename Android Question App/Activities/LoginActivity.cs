@@ -36,6 +36,7 @@ namespace Android_Question_App
         private SubRedditItemsViewPresenter mSubRedditItemsViewPresenter;
         private TextInputEditText mTextInputEditTextSearch;
         private IRedditApi redditApi;
+        Button mSearchButton;
         //private ProgressDialog mProgressDialog;
         private ProgressBar mProgressBarSearch;
 
@@ -48,7 +49,7 @@ namespace Android_Question_App
             mToolbar = FindViewById<Android.Support.V7.Widget.Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(mToolbar);
             mRecyclerViewSubReddit = FindViewById<RecyclerView>(Resource.Id.rvSubReddit);
-            mTextInputEditTextSearch = FindViewById<TextInputEditText>(Resource.Id.textInput1);
+            mTextInputEditTextSearch = FindViewById<TextInputEditText>(Resource.Id.tvSearchInputValue);
             mProgressBarSearch = FindViewById<ProgressBar>(Resource.Id.progressbarSearch);
             //mSearchViewRedditKeyword = FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.sVSubRedditKeyword);
 
@@ -70,8 +71,8 @@ namespace Android_Question_App
 
             mRecyclerViewSubReddit.AddItemDecoration(itemDecorator);
 
-            Button searchButton = FindViewById<Button>(Resource.Id.search_button);
-            searchButton.Click += SearchButton_Click;
+            mSearchButton = FindViewById<Button>(Resource.Id.search_button);
+            mSearchButton.Click += SearchButton_Click;
 
         }
 
@@ -89,6 +90,7 @@ namespace Android_Question_App
                 //mProgressDialog.Show();
                 mProgressBarSearch.Visibility = ViewStates.Visible;
                 HideKeyBoard(mTextInputEditTextSearch.WindowToken);
+                mSearchButton.Enabled = false;
                 //mSubRedditItemsViewPresenter.LoadSubRedditItem(keyword);
                 mSubRedditItemsViewPresenter.LoadSubRedditItem2Async(keyword);
             }
@@ -119,6 +121,7 @@ namespace Android_Question_App
             mRecyclerViewSubReddit.SetAdapter(mSubRedditAdapter);
             //mProgressDialog.Dismiss();
             mProgressBarSearch.Visibility = ViewStates.Invisible;
+            mSearchButton.Enabled = true;
         }
 
         public void LoadingSubRedditError(string err)
