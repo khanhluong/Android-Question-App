@@ -1,7 +1,7 @@
 ﻿using System;
 namespace Common.IViews
 {
-    public interface ISubRedditItemDetailView
+    public interface ISubRedditItemDetailView: IBaseView
     {
         void LoadingSiteBar(string url);
     }

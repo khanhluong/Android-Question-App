@@ -27,7 +27,7 @@ namespace Common.Model
         public int? subscribers { get; set; }
         public List<object> user_flair_richtext { get; set; }
         public int? videostream_links_count { get; set; }
-        public string? name { get; set; }
+        public string name { get; set; }
         public bool? quarantine { get; set; }
         public bool? hide_ads { get; set; }
         public bool? emojis_enabled { get; set; }

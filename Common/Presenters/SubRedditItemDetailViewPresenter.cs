@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Common.IViews;
 
 namespace Common.Presenters
 {
-    public class SubRedditItemDetailViewPresenter
+    public class SubRedditItemDetailViewPresenter: BaseViewPresenter<ISubRedditItemDetailView>
     {
 
         ISubRedditItemDetailView subRedditItemDetailView;
 
-        public SubRedditItemDetailViewPresenter(ISubRedditItemDetailView subRedditItemDetailView)
+        public SubRedditItemDetailViewPresenter(ISubRedditItemDetailView subRedditItemDetailView): base(subRedditItemDetailView)
         {
             this.subRedditItemDetailView = subRedditItemDetailView;
         }
@@ -19,6 +20,9 @@ namespace Common.Presenters
             subRedditItemDetailView.LoadingSiteBar(url);
         }
 
-
+        public override void Init()
+        {
+           
+        }
     }
 }

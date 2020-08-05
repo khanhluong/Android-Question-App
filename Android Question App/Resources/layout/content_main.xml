@@ -14,7 +14,15 @@
 		android:layout_height="wrap_content"
 		android:text="@string/tv_search_for_sub_reddit"
 		android:textAlignment="center"
-		android:textSize="32sp"/>
+		android:textSize="@dimen/title_tv_size"/>
+
+	<ProgressBar
+		android:id="@+id/progressbarSearch"
+		android:visibility="gone"
+		style="@style/ProgressBarStyle"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="@dimen/progress_bar_margin_top"/>
 
 	<android.support.design.widget.TextInputEditText
 		android:id="@+id/textInput1"

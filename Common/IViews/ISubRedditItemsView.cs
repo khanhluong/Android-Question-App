@@ -5,7 +5,7 @@ using Common.Model;
 
 namespace Common.IViews
 {
-    public interface ISubRedditItemsView
+    public interface ISubRedditItemsView: IBaseView
     {
         void GotoSubReditItemDetailView(List<Child> listSubRedditChildren);
         void LoadingSubRedditError(String err);

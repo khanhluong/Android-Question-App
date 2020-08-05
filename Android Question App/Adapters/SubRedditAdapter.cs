@@ -15,18 +15,15 @@ namespace Android_Question_App.Adapters
 {
     public class SubRedditAdapter : RecyclerView.Adapter
     {
-
-        public event EventHandler ItemClick;
-        private readonly SubRedditItemDetailViewPresenter viewModel;
-        private OnItemClickListener onItemClickListener;
+        private readonly OnItemClickListener OnItemClickListener;
 
         List<Child> mListSubRedditChildren;
         ImageLoader imageLoader;
 
-        public SubRedditAdapter(Context context, List<Child> mListSubRedditChildren, OnItemClickListener onItemClickListener)
+        public SubRedditAdapter(Context context, List<Child> mListSubRedditChildren, OnItemClickListener OnItemClickListener)
         {
             this.mListSubRedditChildren = mListSubRedditChildren;
-            this.onItemClickListener = onItemClickListener;
+            this.OnItemClickListener = OnItemClickListener;
             ImageLoader.Instance.Init(ImageLoaderConfiguration.CreateDefault(context));
         }
 
@@ -49,7 +46,7 @@ namespace Android_Question_App.Adapters
 
         private void onClickListener(int position, string redditSubName)
         {
-            onItemClickListener.OnItemClick(position, redditSubName);
+            OnItemClickListener.OnItemClick(position, redditSubName);
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)

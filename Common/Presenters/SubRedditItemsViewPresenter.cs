@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
 using Android.Util;
-using Android_Question_App.Model;
 using Common.Interface;
 using Common.IViews;
 using Common.Model;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Refit;
 
 namespace Common.Presenters
@@ -19,10 +14,15 @@ namespace Common.Presenters
         IRedditApi redditApi;
 
 
-        public SubRedditItemsViewPresenter(ISubRedditItemsView subRedditItemsView)
+        public SubRedditItemsViewPresenter(ISubRedditItemsView subRedditItemsView): base(subRedditItemsView)
         {
             this.subRedditItemsView = subRedditItemsView;
             redditApi = RestService.For<IRedditApi>("https://reddit.com");
+        }
+
+        public override void Init()
+        {
+            //TODO for init
         }
 
 
@@ -45,7 +45,7 @@ namespace Common.Presenters
         //    {
         //        subRedditItemsView.GotoSubReditItemDetailView(listSubReddit);
         //    }, TaskScheduler.FromCurrentSynchronizationContext());
-            
+
         //}
 
 

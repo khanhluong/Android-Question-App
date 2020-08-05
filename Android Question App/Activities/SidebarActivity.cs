@@ -11,15 +11,17 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Webkit;
 using Android.Widget;
+using Android_Question_App.Activities;
+using Android_Question_App.Utils;
 using Common.IViews;
 using Common.Presenters;
 
 namespace Android_Question_App
 {
     [Activity(Label = "SidebarActivity")]
-    public class SidebarActivity : AppCompatActivity, ISubRedditItemDetailView
+    public class SidebarActivity : BaseActivity, ISubRedditItemDetailView
     {
-        public const string SIDEBAR_URL = "sidebarHtml";
+        
         private WebView mSiteBarWebView;
         private SubRedditItemDetailViewPresenter mSubRedditItemDetailViewPresenter;
 
@@ -32,7 +34,7 @@ namespace Android_Question_App
 
             mSubRedditItemDetailViewPresenter = new SubRedditItemDetailViewPresenter(this);
             mSiteBarWebView = (WebView) FindViewById(Resource.Id.webViewSiteBar);
-            var sidebarHtml = Intent.Extras.GetString(SIDEBAR_URL);
+            var sidebarHtml = Intent.Extras.GetString(Constants.SIDEBAR_URL);
             mSubRedditItemDetailViewPresenter.HandleLoadingSideBar(sidebarHtml);
         }
 
@@ -44,15 +46,18 @@ namespace Android_Question_App
         {
             if (mSiteBarWebView.Visibility == ViewStates.Visible)
             {
-                if (mSiteBarWebView.CanGoBack())
-                {
-                    mSiteBarWebView.GoBack();
-                }
-                else
-                {
-                    base.OnBackPressed();
-                }
-                return;
+                this.Finish();
+                //if (mSiteBarWebView.CanGoBack())
+                //{
+                //    //mSiteBarWebView.GoBack();
+                //    //base.OnBackPressed();
+                //    this.Finish();
+                //}
+                //else
+                //{
+                //    base.OnBackPressed();
+                //}
+                //return;
             }
             else
             {

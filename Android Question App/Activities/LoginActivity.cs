@@ -14,8 +14,10 @@ using Android.Util;
 using Android.Views;
 using Android.Views.InputMethods;
 using Android.Widget;
+using Android_Question_App.Activities;
 using Android_Question_App.Adapters;
 using Android_Question_App.Model;
+using Android_Question_App.Utils;
 using Common.Interface;
 using Common.IViews;
 using Common.Model;
@@ -25,7 +27,7 @@ using Refit;
 namespace Android_Question_App
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class LoginActivity : AppCompatActivity, ISubRedditItemsView, OnItemClickListener
+    public class LoginActivity : BaseActivity, ISubRedditItemsView, OnItemClickListener
     {
         private RecyclerView mRecyclerViewSubReddit;
         private SubRedditAdapter mSubRedditAdapter;
@@ -34,14 +36,9 @@ namespace Android_Question_App
         private SubRedditItemsViewPresenter mSubRedditItemsViewPresenter;
         private TextInputEditText mTextInputEditTextSearch;
         private IRedditApi redditApi;
+        //private ProgressDialog mProgressDialog;
+        private ProgressBar mProgressBarSearch;
 
-        public const string REDDIT_URL = "https://reddit.com";
-
-
-        [Obsolete]
-        private ProgressDialog mProgressDialog;
-
-        [Obsolete]
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -52,16 +49,17 @@ namespace Android_Question_App
             SetSupportActionBar(mToolbar);
             mRecyclerViewSubReddit = FindViewById<RecyclerView>(Resource.Id.rvSubReddit);
             mTextInputEditTextSearch = FindViewById<TextInputEditText>(Resource.Id.textInput1);
+            mProgressBarSearch = FindViewById<ProgressBar>(Resource.Id.progressbarSearch);
             //mSearchViewRedditKeyword = FindViewById<Android.Support.V7.Widget.SearchView>(Resource.Id.sVSubRedditKeyword);
 
-            redditApi = RestService.For<IRedditApi>(REDDIT_URL);
+            redditApi = RestService.For<IRedditApi>(Constants.REDDIT_URL);
 
 
             mSubRedditItemsViewPresenter = new SubRedditItemsViewPresenter(this);
 
-            mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.SetMessage(GetString(Resource.String.url_loading));
-            mProgressDialog.SetCancelable(true);
+            //mProgressDialog = new ProgressDialog(this);
+            //mProgressDialog.SetMessage(GetString(Resource.String.url_loading));
+            //mProgressDialog.SetCancelable(true);
 
 
             //init adapter
@@ -77,24 +75,6 @@ namespace Android_Question_App
 
         }
 
-        private async void getSubReddit()
-        {
-            try
-            {
-                SubRedditResponse subRedditResponse = await redditApi.GetSubReddit("demo");
-                Log.Debug("SubRedditResponse", subRedditResponse.datas.children[0].data.icon_img);
-
-            }
-            catch (Exception ex)
-            {
-                Log.Debug("SubRedditResponse ex ", ex.Message);
-                Toast.MakeText(this, ex.StackTrace, ToastLength.Long).Show();
-
-            }
-
-        }
-
-        [Obsolete]
         private void SearchButton_Click(object sender, EventArgs e)
         {
             //getSubReddit();
@@ -106,7 +86,8 @@ namespace Android_Question_App
             }
             else
             {
-                mProgressDialog.Show();
+                //mProgressDialog.Show();
+                mProgressBarSearch.Visibility = ViewStates.Visible;
                 HideKeyBoard(mTextInputEditTextSearch.WindowToken);
                 //mSubRedditItemsViewPresenter.LoadSubRedditItem(keyword);
                 mSubRedditItemsViewPresenter.LoadSubRedditItem2Async(keyword);
@@ -136,12 +117,14 @@ namespace Android_Question_App
         {
             mSubRedditAdapter = new SubRedditAdapter(this, listSubRedditChildren, this);
             mRecyclerViewSubReddit.SetAdapter(mSubRedditAdapter);
-            mProgressDialog.Dismiss();
+            //mProgressDialog.Dismiss();
+            mProgressBarSearch.Visibility = ViewStates.Invisible;
         }
 
         public void LoadingSubRedditError(string err)
         {
-            mProgressDialog.Dismiss();
+            //mProgressDialog.Dismiss();
+            mProgressBarSearch.Visibility = ViewStates.Invisible;
             Toast.MakeText(this, err, ToastLength.Short).Show();
         }
 
@@ -153,12 +136,12 @@ namespace Android_Question_App
 
         public void OnItemClick(int position, string redditSubName)
         {
-            var sidebarHtml = "https://www.reddit.com/" + redditSubName + "/about/sidebar";
+            var sidebarHtml = Constants.REDDIT_URL + redditSubName + Constants.ABOUT_SIZE_BAR;
 
             Log.Debug("sidebarHtml", "sidebarHtml " + sidebarHtml);
 
             var intent = new Intent(this, typeof(SidebarActivity));
-            intent.PutExtra("sidebarHtml", sidebarHtml);
+            intent.PutExtra(Constants.SIDEBAR_URL, sidebarHtml);
             this.StartActivity(intent);
         }
 

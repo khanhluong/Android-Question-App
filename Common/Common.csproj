@@ -61,6 +61,7 @@
     <Compile Include="Model\Datas.cs" />
     <Compile Include="Model\SubRedditResponse.cs" />
     <Compile Include="Interface\IRedditApi.cs" />
+    <Compile Include="IViews\IBaseView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
